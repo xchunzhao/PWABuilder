@@ -59,7 +59,11 @@ async function tryGenerateOculusPackage(options: OculusAppPackageOptions): Promi
 }
 
 async function tryGenerateWindowsPackage(packageOptions: WindowsPackageOptions): Promise<PackageInfo | null> {
-  const blob = await generateWindowsPackage(packageOptions);
+  const blob = await generateWindowsPackage({
+    ...packageOptions,
+    edgeChannel: "canary",
+    edgeLaunchArgs: "--windows-store-app --user-data-dir=C:/digital-goods-tmp"
+  });
   return {
     appName: packageOptions.name,
     blob: blob || null,
